@@ -2,7 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\Department;
+use app\models\Employee;
+use app\models\Position;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -62,6 +66,38 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionEmployee()
+    {
+
+    }
+
+    public function actionEmployeeList()
+    {
+        $query = Employee::find()
+            ->joinWith(['department', 'position']);
+        $pages = new Pagination([
+            'totalCount' => (Employee::find())->count(),
+            'defaultPageSize' => 30,
+        ]);
+        $employees = $query
+            ->offset($pages->offset)
+            ->limit($pages->limit)
+            ->with(['department', 'position'])
+            ->all();
+        return $this->render(
+            'employee_list',
+            [
+                'employees' => $employees,
+                'pages' => $pages,
+            ]
+        );
+    }
+
+    public function actionAbc()
+    {
+
     }
 
     /**
