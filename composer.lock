@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f7d655aa585fa33b85f596cc0f41d22",
+    "content-hash": "16668abc6f833299cd60034f8075f278",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -313,6 +313,110 @@
                 "html"
             ],
             "time": "2017-06-03T02:28:16+00:00"
+        },
+        {
+            "name": "sergeymakinen/yii2-config",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sergeymakinen/yii2-config.git",
+                "reference": "b2364784e1d79cd9a13205a982b269058aa4c077"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sergeymakinen/yii2-config/zipball/b2364784e1d79cd9a13205a982b269058aa4c077",
+                "reference": "b2364784e1d79cd9a13205a982b269058aa4c077",
+                "shasum": ""
+            },
+            "require": {
+                "sergeymakinen/yii2-php-file-cache": "^2.0",
+                "yiisoft/yii2": "~2.0.2"
+            },
+            "require-dev": {
+                "sergeymakinen/yii2-tests": "^2.0",
+                "symfony/yaml": "^2.8 || ^3.2"
+            },
+            "suggest": {
+                "symfony/yaml": "Required to load YAML config files (^2.8 || ^3.2)."
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "sergeymakinen\\yii\\config\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Makinen",
+                    "email": "sergey@makinen.ru",
+                    "homepage": "https://makinen.ru"
+                }
+            ],
+            "description": "Versatile config loader for Yii 2",
+            "homepage": "https://github.com/sergeymakinen/yii2-config",
+            "keywords": [
+                "config",
+                "configuration",
+                "loader",
+                "yii",
+                "yii2",
+                "yii2-config"
+            ],
+            "time": "2017-01-30T17:55:31+00:00"
+        },
+        {
+            "name": "sergeymakinen/yii2-php-file-cache",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sergeymakinen/yii2-php-file-cache.git",
+                "reference": "6d3ced13e63dc1565d32af5cd842470aab03fad3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sergeymakinen/yii2-php-file-cache/zipball/6d3ced13e63dc1565d32af5cd842470aab03fad3",
+                "reference": "6d3ced13e63dc1565d32af5cd842470aab03fad3",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.7"
+            },
+            "require-dev": {
+                "sergeymakinen/yii2-tests": "^2.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "sergeymakinen\\yii\\phpfilecache\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Makinen",
+                    "email": "sergey@makinen.ru",
+                    "homepage": "https://makinen.ru"
+                }
+            ],
+            "description": "Yii 2 PHP file cache",
+            "homepage": "https://github.com/sergeymakinen/yii2-php-file-cache",
+            "keywords": [
+                "cache",
+                "caching",
+                "file",
+                "php",
+                "yii",
+                "yii2",
+                "yii2-php-file-cache"
+            ],
+            "time": "2017-01-06T15:26:05+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
