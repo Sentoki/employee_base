@@ -54,11 +54,12 @@ class WorkersController extends Controller
                 'Any-Latin; Latin-ASCII; Lower()',
                 $lastname_and_firstname[0] . '_' . $lastname_and_firstname[1] . '_' . $year
             );
-            $email = $email . '@mail.ru';
+            $email = str_replace("'", '', $email . '@mail.ru');
             $position_id = rand(1, 5);
             $department_id = rand(1, 8);
+            $phone = rand(71111111111, 79999999999);
             echo "['{$lastname_and_firstname[1]}', '{$lastname_and_firstname[0]}', '{$birth}', '{$email}',".
-                " '{$employment_date}', '{$leave_date}', {$position_id}, $department_id],\n";
+                "'+{$phone}', '{$employment_date}', '{$leave_date}', {$position_id}, $department_id],\n";
         }
     }
 

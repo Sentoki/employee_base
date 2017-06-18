@@ -1,33 +1,18 @@
-<h1>Список сотрудников</h1>
+<h1>Алфавитный указатель сотрудников</h1>
 
 <?php
 
-use yii\bootstrap\ActiveForm;
-use yii\bootstrap\Html;
 use yii\widgets\LinkPager;
 
+echo \app\helpers\EmployeeHelper::getAbcMenu();
+
+if (!isset($abcGroupId)) {
+    echo "<h2>Необходимо выбрать группу сотрудников</h2>";
+}
+/** @var \yii\data\Pagination $pages */
+echo "<h3>В данном разделе {$pages->totalCount} сотрудников</h3>";
+
 ?>
-
-<?php $form = ActiveForm::begin(
-        [
-            'id' => 'filter-form',
-            'layout' => 'horizontal',
-            'method' => 'get',
-        ]
-); ?>
-
-<?= $form
-    ->field($filterForm, 'department')
-    ->dropDownList($departments, ['prompt' => 'Укажите отдел'])->label('Отдел'); ?>
-<?= $form
-    ->field($filterForm, 'isWork')
-    ->dropDownList([1 => 'Работает', 2 => 'Уволен'], ['prompt' => 'Все сотрудники'])->label('Статус'); ?>
-
-<div class="form-group">
-    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
-</div>
-
-<?php ActiveForm::end(); ?>
 <table class="table table-striped">
     <tr>
         <th>Сотрудник</th>
