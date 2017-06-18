@@ -2,12 +2,16 @@
 
 namespace app\controllers;
 
+use app\helpers\EmployeeHelper;
+use app\models\AbcGroup;
 use app\models\Department;
 use app\models\Employee;
+use app\models\FilterForm;
 use app\models\Position;
 use Yii;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -65,39 +69,85 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
     }
 
-    public function actionEmployee()
+    public function actionEmployee($employee_id)
     {
+        $employee = Employee::find()
+            ->joinWith(['department', 'position'])
+            ->with(['department', 'position'])
+            ->limit(1)
+            ->where(['employee.id' => $employee_id])
+            ->one();
+        return $this->render('employee', ['employee' => $employee]);
 
     }
 
     public function actionEmployeeList()
     {
+        $filterForm = new FilterForm();
         $query = Employee::find()
             ->joinWith(['department', 'position']);
+        $employees = $query->with(['department', 'position']);
+        if ($filterForm->load(Yii::$app->request->get()) && $filterForm->validate()) {
+            if (isset($filterForm->department) && $filterForm->department != '') {
+                $employees->where(['department_id' => $filterForm->department]);
+            }
+            if (isset($filterForm->isWork) && (integer)$filterForm->isWork === 2) {
+                $employees->andWhere(['NOT', ['leave_date' => null]]);
+            } elseif (isset($filterForm->isWork) && (integer)$filterForm->isWork === 1) {
+                $employees->andWhere(['is', 'leave_date', null]);
+            }
+        }
         $pages = new Pagination([
-            'totalCount' => (Employee::find())->count(),
+            'totalCount' => (clone $employees)->count(),
             'defaultPageSize' => 30,
         ]);
-        $employees = $query
+        $employees = $employees
             ->offset($pages->offset)
             ->limit($pages->limit)
-            ->with(['department', 'position'])
             ->all();
+
+        $departments = Department::find()->all();
+        $departments = ArrayHelper::map($departments, 'id', 'title');
+
         return $this->render(
             'employee_list',
             [
                 'employees' => $employees,
+                'departments' => $departments,
                 'pages' => $pages,
+                'filterForm' => $filterForm,
             ]
         );
     }
 
-    public function actionAbc()
+    public function actionAbc($abcGroupId = null)
     {
+        if (isset($abcGroupId)) {
+            $group = AbcGroup::findOne(['id' => $abcGroupId]);
+            $query = EmployeeHelper::getEmployeesQueryByGroup($group);
+            $pages = new Pagination([
+                'totalCount' => (clone $query)->count(),
+                'defaultPageSize' => 30,
+            ]);
+            $employees = $query
+                ->offset($pages->offset)
+                ->limit($pages->limit)
+                ->all();
+        } else {
+            $employees = [];
+            $pages = new Pagination();
+        }
 
+        return $this->render(
+            'employee_abc_list',
+            [
+                'abcGroupId' => $abcGroupId,
+                'employees' => $employees,
+                'pages' => $pages,
+            ]
+        );
     }
 
     /**

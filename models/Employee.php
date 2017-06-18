@@ -8,10 +8,12 @@ use Yii;
  * This is the model class for table "employees.employee".
  *
  * @property integer $id
- * @property string $firstname
- * @property string $lastname
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $last_name_letter
  * @property string $birth_date
  * @property string $email
+ * @property string $phone
  * @property string $employment_date
  * @property string $leave_date
  * @property integer $position_id
@@ -38,12 +40,13 @@ class Employee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['firstname', 'lastname', 'birth_date', 'email', 'employment_date', 'position_id', 'department_id'], 'required'],
+            [['first_name', 'last_name', 'last_name_letter', 'birth_date', 'email', 'phone', 'employment_date', 'position_id', 'department_id'], 'required'],
             [['birth_date', 'employment_date', 'leave_date', 'created_at', 'updated_at'], 'safe'],
             [['position_id', 'department_id'], 'integer'],
-            [['firstname', 'lastname', 'email'], 'string', 'max' => 255],
-            [['department_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmployeesDepartment::className(), 'targetAttribute' => ['department_id' => 'id']],
-            [['position_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmployeesPosition::className(), 'targetAttribute' => ['position_id' => 'id']],
+            [['first_name', 'last_name', 'email', 'phone'], 'string', 'max' => 255],
+            [['last_name_letter'], 'string', 'max' => 1],
+            [['department_id'], 'exist', 'skipOnError' => true, 'targetClass' => Department::className(), 'targetAttribute' => ['department_id' => 'id']],
+            [['position_id'], 'exist', 'skipOnError' => true, 'targetClass' => Position::className(), 'targetAttribute' => ['position_id' => 'id']],
         ];
     }
 
@@ -54,10 +57,12 @@ class Employee extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'firstname' => 'Firstname',
-            'lastname' => 'Lastname',
+            'first_name' => 'First Name',
+            'last_name' => 'Last Name',
+            'last_name_letter' => 'Last Name Letter',
             'birth_date' => 'Birth Date',
             'email' => 'Email',
+            'phone' => 'Phone',
             'employment_date' => 'Employment Date',
             'leave_date' => 'Leave Date',
             'position_id' => 'Position ID',

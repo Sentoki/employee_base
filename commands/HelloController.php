@@ -7,6 +7,7 @@
 
 namespace app\commands;
 
+use app\helpers\EmployeeHelper;
 use yii\console\Controller;
 
 /**
@@ -25,6 +26,6 @@ class HelloController extends Controller
      */
     public function actionIndex($message = 'hello world')
     {
-        echo $message . "\n";
+        EmployeeHelper::updateAbcGroups();
     }
 }

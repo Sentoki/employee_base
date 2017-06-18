@@ -2,13 +2,12 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
 
-class FilterForm extends Model
+class DepartmentForm extends Model
 {
-    public $department;
-    public $isWork;
+    public $title;
+    public $description;
 
     /**
      * @return array the validation rules.
@@ -16,8 +15,8 @@ class FilterForm extends Model
     public function rules()
     {
         return [
-            ['department', 'integer'],
-            ['isWork', 'integer'],
+            ['title', 'string'],
+            ['description', 'string'],
         ];
     }
 }
