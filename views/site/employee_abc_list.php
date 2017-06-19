@@ -4,7 +4,7 @@
 
 use yii\widgets\LinkPager;
 
-echo \app\helpers\EmployeeHelper::getAbcMenu();
+echo \app\helpers\EmployeeHelper::getAbcMenu($abcGroupId);
 
 if (!isset($abcGroupId)) {
     echo "<h2>Необходимо выбрать группу сотрудников</h2>";
@@ -23,7 +23,7 @@ echo "<h3>В данном разделе {$pages->totalCount} сотрудник
 <?php
 /** @var \app\models\Employee $employee */
 foreach ($employees as $employee) {
-    $name = $employee->last_name . ' ' . $employee->first_name;
+    $name = $employee->last_name . ' ' . $employee->first_name . ' ' . $employee->patrynomic;
     $url = \yii\helpers\Url::to(['site/employee', 'employee_id' => $employee->id]);
     echo "<tr>
 <td><a href='{$url}'>{$name}</a></td>

@@ -12,6 +12,7 @@ class m170613_145429_add_employee_table extends Migration
             [
                 'id' => $this->primaryKey(),
                 'first_name' => $this->string()->notNull(),
+                'patrynomic' => $this->string()->notNull(),
                 'last_name' => $this->string()->notNull(),
                 'last_name_letter' => $this->string(1)->notNull(),
                 'birth_date' => $this->date()->notNull(),

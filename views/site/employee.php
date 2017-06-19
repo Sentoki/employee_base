@@ -3,7 +3,7 @@
 $employee;
 ?>
 
-<h1><?= "{$employee->last_name} {$employee->first_name}"; ?></h1>
+<h1><?= "{$employee->last_name} {$employee->first_name} {$employee->patrynomic}"; ?></h1>
 
 <p>Отдел: <?= $employee->department->title; ?></p>
 <p>Должность: <?= $employee->position->title; ?></p>

@@ -75,9 +75,10 @@ class EmployeeTest extends TestCase
         ];
         $groups = EmployeeHelper::getGroupsByLetterNumbers($letters, 100);
         $expected = [
-            ['А', 'Г'],
-            ['Д', 'Ж'],
-            ['З', 'И'],
+            ['А', 'В'],
+            ['Г', 'Е'],
+            ['Ё', 'З'],
+            ['И', 'И'],
         ];
         $this->assertEquals($expected, $groups);
     }
