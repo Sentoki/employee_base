@@ -6,6 +6,7 @@ use Yii;
 
 /**
  * This is the model class for table "employees.abc_group".
+ * Группа для деления сотрудников по алфавиту
  *
  * @property integer $id
  * @property string $from

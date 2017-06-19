@@ -6,6 +6,7 @@ use Yii;
 
 /**
  * This is the model class for table "employees.department".
+ * Модель отдела
  *
  * @property integer $id
  * @property string $title
@@ -13,7 +14,7 @@ use Yii;
  * @property string $created_at
  * @property string $updated_at
  *
- * @property EmployeesEmployee[] $employeesEmployees
+ * @property Employee[] $employeesEmployees
  */
 class Department extends \yii\db\ActiveRecord
 {
@@ -56,6 +57,6 @@ class Department extends \yii\db\ActiveRecord
      */
     public function getEmployeesEmployees()
     {
-        return $this->hasMany(EmployeesEmployee::className(), ['department_id' => 'id']);
+        return $this->hasMany(Employee::className(), ['department_id' => 'id']);
     }
 }

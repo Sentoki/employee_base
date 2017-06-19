@@ -25,7 +25,7 @@ class WorkersController extends Controller
         $paramPost = [
             'fam' => 1,
             'imya' => 1,
-            'otch' => 0,
+            'otch' => 1,
             'pol' => $is_male,
             'count' => $number,
         ];
@@ -39,7 +39,11 @@ class WorkersController extends Controller
         curl_close($curl);
         $temp_names = explode('  ', $out);
         foreach ($temp_names as $name) {
-            $lastname_and_firstname = explode(' ', trim($name));
+            //echo "$name\n";
+            $lastname_firstname_patrynomic = explode(' ', trim($name));
+            if (sizeof($lastname_firstname_patrynomic) < 3) {
+                continue;
+            }
             $year = rand(1950, 1999);
             $birth = $year . '-' . rand(1, 12) . '-' . rand(1, 28);
             $employment_date = rand(2010, 2017) . '-' . rand(1, 12) . '-' . rand(1, 28);
@@ -52,13 +56,13 @@ class WorkersController extends Controller
 
             $email = transliterator_transliterate(
                 'Any-Latin; Latin-ASCII; Lower()',
-                $lastname_and_firstname[0] . '_' . $lastname_and_firstname[1] . '_' . $year
+                $lastname_firstname_patrynomic[0] . '_' . $lastname_firstname_patrynomic[1] . '_' . $year
             );
             $email = str_replace("'", '', $email . '@mail.ru');
             $position_id = rand(1, 5);
             $department_id = rand(1, 8);
             $phone = rand(71111111111, 79999999999);
-            echo "['{$lastname_and_firstname[1]}', '{$lastname_and_firstname[0]}', '{$birth}', '{$email}',".
+            echo "['{$lastname_firstname_patrynomic[1]}', '{$lastname_firstname_patrynomic[2]}', '{$lastname_firstname_patrynomic[0]}', '{$birth}', '{$email}',".
                 "'+{$phone}', '{$employment_date}', '{$leave_date}', {$position_id}, $department_id],\n";
         }
     }

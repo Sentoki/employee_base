@@ -19,6 +19,7 @@ class m170618_012155_create_add_abc_group_table extends Migration
         $this->execute(
             'CREATE TRIGGER updated_at BEFORE UPDATE ON employees.abc_group FOR EACH ROW EXECUTE PROCEDURE updated_at();'
         );
+        \app\helpers\EmployeeHelper::updateAbcGroups();
     }
 
     /**

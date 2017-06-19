@@ -5,6 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 
+/**
+ * Модель для формы фильтрации сотрудников
+ *
+ * Class FilterForm
+ * @package app\models
+ */
 class FilterForm extends Model
 {
     public $department;

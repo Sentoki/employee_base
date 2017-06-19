@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\EmployeeHelper;
 use Yii;
 
 /**
@@ -9,6 +10,7 @@ use Yii;
  *
  * @property integer $id
  * @property string $first_name
+ * @property string $patrynomic
  * @property string $last_name
  * @property string $last_name_letter
  * @property string $birth_date
@@ -35,15 +37,29 @@ class Employee extends \yii\db\ActiveRecord
     }
 
     /**
+     * При изменении сотрудника пересчитывает алфавитные группы.
+     * Есть простор для оптимизации - не выполнять пересчёт если не изменялась
+     * фамилия или это не новый сотрудник
+     *
+     * @param bool $insert
+     * @param array $changedAttributes
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        EmployeeHelper::updateAbcGroups();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['first_name', 'last_name', 'last_name_letter', 'birth_date', 'email', 'phone', 'employment_date', 'position_id', 'department_id'], 'required'],
+            [['first_name', 'patrynomic', 'last_name', 'last_name_letter', 'birth_date', 'email', 'phone', 'employment_date', 'position_id', 'department_id'], 'required'],
             [['birth_date', 'employment_date', 'leave_date', 'created_at', 'updated_at'], 'safe'],
             [['position_id', 'department_id'], 'integer'],
-            [['first_name', 'last_name', 'email', 'phone'], 'string', 'max' => 255],
+            [['first_name', 'patrynomic', 'last_name', 'email', 'phone'], 'string', 'max' => 255],
             [['last_name_letter'], 'string', 'max' => 1],
             [['department_id'], 'exist', 'skipOnError' => true, 'targetClass' => Department::className(), 'targetAttribute' => ['department_id' => 'id']],
             [['position_id'], 'exist', 'skipOnError' => true, 'targetClass' => Position::className(), 'targetAttribute' => ['position_id' => 'id']],
@@ -58,6 +74,7 @@ class Employee extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'first_name' => 'First Name',
+            'patrynomic' => 'Patrynomic',
             'last_name' => 'Last Name',
             'last_name_letter' => 'Last Name Letter',
             'birth_date' => 'Birth Date',

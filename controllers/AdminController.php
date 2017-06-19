@@ -4,13 +4,16 @@ namespace app\controllers;
 
 use app\models\Department;
 use app\models\DepartmentForm;
+use app\models\Employee;
+use app\models\EmployeeForm;
+use app\models\Position;
 use Yii;
 use yii\db\IntegrityException;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 class AdminController extends \yii\web\Controller
 {
-    public $layout = 'admin';
-
     public function actionIndex()
     {
         return $this->render('index');
@@ -98,7 +101,46 @@ class AdminController extends \yii\web\Controller
 
     public function actionEmployeeEdit($employee_id)
     {
-        return $this->render('employee_edit');
+        $employee = Employee::findOne(['id' => $employee_id]);
+        $form = new EmployeeForm();
+        $form->load($employee->attributes, '');
+        $positions = Position::find()->all();
+        $positions = ArrayHelper::map($positions, 'id', 'title');
+        $departments = Department::find()->all();
+        $departments = ArrayHelper::map($departments, 'id', 'title');
+
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            $employee->attributes = $form->getAttributes();
+            $employee->save();
+            Yii::$app->session->setFlash(
+                'success',
+                'Данные сотрудника обновлены'
+            );
+        }
+
+        return $this->render(
+            'employee_edit',
+            [
+                'editForm' => $form,
+                'positions' => $positions,
+                'departments' => $departments,
+                'errors' => $form->getErrors(),
+                'employee' => $employee,
+            ]
+        );
     }
 
+    public function actionEmployeeFire($employee_id)
+    {
+        $employee = Employee::findOne(['id' => $employee_id]);
+        $employee->leave_date = (new \DateTime('now'))->format('Y-m-d');
+        $employee->save();
+        Yii::$app->session->setFlash(
+            'warning',
+            'Сотрудник уволен'
+        );
+        $this->redirect(
+            Url::to(['admin/employee-edit', 'employee_id' => $employee->id])
+        );
+    }
 }

@@ -13,7 +13,7 @@ use Yii;
  * @property string $created_at
  * @property string $updated_at
  *
- * @property EmployeesEmployee[] $employeesEmployees
+ * @property Employee[] $employeesEmployees
  */
 class Position extends \yii\db\ActiveRecord
 {
@@ -56,6 +56,6 @@ class Position extends \yii\db\ActiveRecord
      */
     public function getEmployeesEmployees()
     {
-        return $this->hasMany(EmployeesEmployee::className(), ['position_id' => 'id']);
+        return $this->hasMany(Employee::className(), ['position_id' => 'id']);
     }
 }
